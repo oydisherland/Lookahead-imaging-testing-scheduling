@@ -1,0 +1,52 @@
+# Virtualenvs
+.venv/
+venv/
+env/
+ENV/
+
+# Python artifacts
+__pycache__/
+
+*.py[cod]
+*$py.class
+*.so
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+*.egg
+
+# Tests / coverage
+.pytest_cache/
+coverage.xml
+.coverage
+htmlcov/
+
+# Tooling / caches
+.mypy_cache/
+.cache/
+.ipynb_checkpoints/
+
+# IDEs / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / runtime files
+*.log
+*.sqlite3
+
+# Secrets / env files
+.env
+.env.local
+.env.*.local
+
+# Project-specific generated data (do not commit cache/results)
+cloudDataFile.json
