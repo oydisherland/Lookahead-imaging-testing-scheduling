@@ -17,7 +17,7 @@ TW = namedtuple("TW", ["start", "end"])
 TTW = namedtuple("TTW", ["GT", "TWs"])
 
 #Observation Task
-OT = namedtuple("OT", [ "taskID", "GT", "start", "end"])
+OT = namedtuple("OT", [ "GT", "start", "end"])
 
 #Scheduling Parameters for the model
 SP = namedtuple("SP", ["maxCaptures", "captureDuration", "transitionTime", "hypsoNr"])

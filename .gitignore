@@ -50,3 +50,6 @@ Thumbs.db
 
 # Project-specific generated data (do not commit cache/results)
 cloudDataFile.json
+
+# Skyfiled data
+de421.bsp

@@ -4,6 +4,9 @@ import datetime
 import os
 import requests
 from requests.exceptions import SSLError, RequestException
+from quaternions import generate_quaternions
+
+from get_target import GT
 
 
 ts = skf.load.timescale()
@@ -170,3 +173,22 @@ def findIllumminationPeriods(targetLat: float, targetLong: float, startTime: dat
     
 
     return illuminatedPeriods
+
+
+def calculateQuaternions(hypsoNr: int, groundTarget: GT, timestamp: datetime.datetime):
+    """ Calculate the quaternions for a given target at a given time
+    Output:
+    - quaternions: dictionary with keys 'r', 'l', 'j', 'k'
+    """
+    quaternions = {}
+
+    satellite_skf = createSatelliteObject(hypsoNr)
+    elevation = findSatelliteTargetElevation(float(groundTarget.lat), float(groundTarget.long), timestamp, hypsoNr)
+    q = generate_quaternions(satellite_skf, timestamp, float(groundTarget.lat), float(groundTarget.long), elevation)
+
+    quaternions['r'] = q[0]
+    quaternions['l'] = q[1]
+    quaternions['j'] = q[2]
+    quaternions['k'] = q[3]
+
+    return quaternions
