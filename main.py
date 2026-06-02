@@ -24,7 +24,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("-s", dest="start_time", required=True, help="Start time in ISO format, e.g. 2026-06-01T00:00:00Z, or write now for current time")
     parser.add_argument("-e", dest="end_time", required=True, help="End time in ISO format, e.g. 2026-06-02T00:00:00Z, or write +X for X hours from start time, e.g. +24 for 24 hours from start time")
     parser.add_argument("-h", dest="hypso_number", required=True, type=int, help="HYPSO satellite number, e.g. 1 or 2")
-    parser.add_argument("-input", dest="target_file_path", required=True, help="Path to the target JSON file")
+    parser.add_argument("-targets", dest="target_file_path", required=True, help="Path to the target JSON file")
+    parser.add_argument("-schedule", dest="input_schedule_file_path", required=True, help="Path to the input schedule file to insert lookahead capture cmdLines into, if not provided cmdLines will not be inserted into schedule file")
     parser.add_argument("--help", action="help", help="Show this help message and exit")
     return parser
 
@@ -42,8 +43,9 @@ def main() -> int:
     else:
         end_time = parse_datetime(args.end_time)
     target_file_path = os.path.abspath(args.target_file_path)
+    input_schedule_file_path = os.path.abspath(args.input_schedule_file_path)
 
-    getLookaheadCaptureCandidates(start_time, end_time, args.hypso_number, target_file_path)
+    getLookaheadCaptureCandidates(start_time, end_time, args.hypso_number, target_file_path, input_schedule_file_path)
     return 0
 
 

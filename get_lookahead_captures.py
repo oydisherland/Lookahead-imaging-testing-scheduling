@@ -1,7 +1,8 @@
 from orbital_calculations import findIllumminationPeriods, findSatelliteTargetPasses, updateTLE, calculateQuaternions, findSatelliteTargetElevation
 from get_target import getGroundTargetObjectsFromJsonFile, GT
+from objects import OT
 from extract_coud_data import getCloudData
-from read_write_cmdLine import createCaptureCmdLine, recreateScheduleFromCmdLineFile
+from read_write_cmdLine import createCaptureCmdLine, insertCmdLineIntoSchedule
 import json
 from collections import defaultdict
 from bisect import bisect_left
@@ -16,6 +17,7 @@ class TargetPass:
     startTime: datetime.datetime
     endTime: datetime.datetime
     cloudLevel: float
+    elevation: float
 
 def getStartAndEndTimeOfPasses(targetLat: float, targetLong: float, targetElevation: float, startTime: datetime.datetime, endTime: datetime.datetime, hypsoNr: int, twMaxSeconds = 500) -> tuple:
     """ Get the start and end time of a list of passes
@@ -58,7 +60,7 @@ def getStartAndEndTimeOfPasses(targetLat: float, targetLong: float, targetElevat
     
     return startTimes, endTimes
 
-def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planningEndTime: datetime.datetime, hypsoNr: int, lookaheadTargets_jsonfilepath: str) -> list:
+def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planningEndTime: datetime.datetime, hypsoNr: int, lookaheadTargets_jsonfilepath: str, inputSchedule_filePath: str) -> list:
     """
     Input:
     - planningStartTime: datetime object representing the start time of the planning horizon
@@ -145,7 +147,8 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
                     orbitIndex=i,
                     startTime=st,
                     endTime=et,
-                    cloudLevel=cloudData[closestTime]
+                    cloudLevel=cloudData[closestTime],
+                    elevation=findSatelliteTargetElevation(float(gt.lat), float(gt.long), st + (et - st) / 2, hypsoNr)
                 )
                 targetPasses[gt.id].append(newTargetPass)
 
@@ -155,6 +158,7 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
 
     for targetId, passes in targetPasses.items():
         if len(passes) <= 1:
+            # only one pass for this target, dont add to pass pairs list
             continue
             
         for i, targetPass in enumerate(passes[:-1]):
@@ -167,27 +171,45 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
 
             if nextPass.orbitIndex == targetPass.orbitIndex + 1:
                 conecutiveOrbit_pairs.append((targetPass, nextPass))
-                elevDeg1 = findSatelliteTargetElevation(float(targetPass.groundTarget.lat), float(targetPass.groundTarget.long), targetPass.startTime, hypsoNr)
-                elevDeg2 = findSatelliteTargetElevation(float(nextPass.groundTarget.lat), float(nextPass.groundTarget.long), nextPass.startTime, hypsoNr)
-                print(f"Consecutive orbit pair for target {targetId}: \nOrbit {targetPass.orbitIndex} with cl {targetPass.cloudLevel} and elevation {elevDeg1} \nOrbit {nextPass.orbitIndex} with cl {nextPass.cloudLevel} and elevation {elevDeg2} \nDifference in cloud level: {nextPass.cloudLevel - targetPass.cloudLevel}\n")
+                # elevDeg1 = targetPass.elevation
+                # elevDeg2 = nextPass.elevation
+               # print(f"Consecutive orbit pair for target {targetId}: \nOrbit {targetPass.orbitIndex} with cl {targetPass.cloudLevel} and elevation {elevDeg1} \nOrbit {nextPass.orbitIndex} with cl {nextPass.cloudLevel} and elevation {elevDeg2} \nDifference in cloud level: {nextPass.cloudLevel - targetPass.cloudLevel}\n")
 
-    print(f"Found {len(passPairs)} pass pairs of consecutive orbits for all targets")
-    print(f"Found {len(conecutiveOrbit_pairs)} consecutive orbit pairs for all targets")
+    print(f"Found {len(passPairs)} pass pairs of for all targets in lookahead target list")
 
 
-    # Sort 
-    scored_passPairs = [
-        (pass1, pass2, (pass1.cloudLevel - pass2.cloudLevel))
+    # Sort the list after decreasing differnce in cloud level and increasing cloud level
+    passPairs_cloudDiff = [
+        (pass1, pass2)
         for pass1, pass2 in passPairs
     ]
+    # Sort list after decreasing difference in cloud level between 1st and second pass 
+    cloudDiffSorted_passPairs = sorted(passPairs_cloudDiff, key=lambda x: (x[0].cloudLevel - x[1].cloudLevel), reverse=True)
+    
+    passPairs_cloudLevel = [
+        (pass1, pass2)
+        for pass1, pass2 in passPairs
+    ]
+    # Sort list after increasing cloud coverage of first pass
+    cloudLevelSorted_passPairs = sorted(passPairs_cloudLevel, key=lambda x: x[0].cloudLevel, reverse=False)
 
-
-    sorted_passPairs_by_diff = sorted(scored_passPairs, key=lambda x: x[2], reverse=True)
+    # Combine the two soreted lists
+    sorted_passPairs = []
+    for cloudDiffPair, cloudLevelPair in zip(cloudDiffSorted_passPairs, cloudLevelSorted_passPairs):
+        if cloudDiffPair not in sorted_passPairs:
+            sorted_passPairs.append(cloudDiffPair)
+        if cloudLevelPair not in sorted_passPairs:
+            sorted_passPairs.append(cloudLevelPair) 
 
     ## Sort out the top 5 pass pairs with the largest difference in cloud level
     lookaheadCmdLines = []
+    outputSchedule_filepath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28_updated.txt")
+    importantGT_ids= [gt.id for gt in getGroundTargetObjectsFromJsonFile(os.path.join(os.path.dirname(__file__), "important_targets.json"))]
 
-    for pass1, pass2, cloudsDiff in sorted_passPairs_by_diff:
+    maxInsertions = 5   # Hardcoded
+
+    for pass1, pass2 in sorted_passPairs:
+        cloudsDiff = pass1.cloudLevel - pass2.cloudLevel
 
         
         # print(f"Target {pass1.groundTarget.id} has cloud level {pass1.cloudLevel} in pass 1 (orbit {pass1.orbitIndex}), and cloud level {pass2.cloudLevel} in pass 2 (orbit {pass2.orbitIndex}), with a difference of {cloudsDiff}")
@@ -199,22 +221,38 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
         cmdLine_pass2 = createCaptureCmdLine(pass2.groundTarget, hypsoNr, quaternions_pass2, pass2.startTime, pass2.endTime, pass2.cloudLevel)
         # print(f"CmdLine for pass 1: {cmdLine_pass1}")
         # print(f"CmdLine for pass 2: {cmdLine_pass2}")
-        elevationpass1 = findSatelliteTargetElevation(float(pass1.groundTarget.lat), float(pass1.groundTarget.long), pass1.startTime, hypsoNr)
-        elevationpass2 = findSatelliteTargetElevation(float(pass2.groundTarget.lat), float(pass2.groundTarget.long), pass2.startTime, hypsoNr)
+        elevationpass1 = pass1.elevation
+        elevationpass2 = pass2.elevation
         passinfo = f"Passses are {pass2.orbitIndex - pass1.orbitIndex} orbits appart, cloud level pass 1: {pass1.cloudLevel}, Cloud level pass 2: {pass2.cloudLevel}, Difference: {round(cloudsDiff, 2)}, Elevation pass 1: {round(elevationpass1, 2)}, Elevation pass 2: {round(elevationpass2, 2)} \n"
         lookaheadCmdLines.append((cmdLine_pass1, cmdLine_pass2, passinfo))
 
-    ## See if it can be inserted into the schedule without overlap, and if so, insert it
-    inputSchedule_FilePath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28.txt")
-    inputSchedule_otList = recreateScheduleFromCmdLineFile(inputSchedule_FilePath, lookaheadTargets_jsonfilepath, captureDurationSec = 60)
+        if maxInsertions <= 0:
+            break
+        
 
-    # for cmdLine_pass1, cmdLine_pass2 in lookaheadCmdLines:
-    #     # Look for colliding OTs in the schedule for pass 1 and pass 2
-    #     ot_pass1 = getObservationTaskFromCmdLine(lookaheadTargets_jsonfilepath, cmdLine_pass1)
-    #     ot_pass2 = getObservationTaskFromCmdLine(lookaheadTargets_jsonfilepath, cmdLine_pass2)   
-    #     # Finish this
+        # try to insert pass 1 into schedule
+        middletime = pass1.startTime + (pass1.endTime - pass1.startTime) / 2
+        couldInsertImage = insertCmdLineIntoSchedule(int(middletime.timestamp()), cmdLine_pass1, inputSchedule_filePath, outputSchedule_filepath, importantGT_ids)
+        if not couldInsertImage:
+            print(f"Could not insert cmdLine for target {pass1.groundTarget.id} into schedule file {inputSchedule_filePath} without overlap with important targets")
+            continue
+        # try to insert pass 2 into schedule
+        middletime = pass2.startTime + (pass2.endTime - pass2.startTime) / 2
+        couldInsertImage = insertCmdLineIntoSchedule(int(middletime.timestamp()), cmdLine_pass2, outputSchedule_filepath, outputSchedule_filepath, importantGT_ids)
+        if not couldInsertImage:
+            print(f"Could not insert cmdLine for target {pass2.groundTarget.id} into schedule file {inputSchedule_filePath} without overlap with important targets")
+            continue    
+        maxInsertions -= 1
+        # write the updated schedule to file
+        with open(outputSchedule_filepath, 'r') as f:
+            cmdLines = f.readlines()
+        with open(inputSchedule_filePath, 'w') as f:
+            f.writelines(cmdLines)
+        # remove the temporary updated schedule file
+        if os.path.exists(outputSchedule_filepath):
+            os.remove(outputSchedule_filepath)
 
-    ### Savet the output to files ###
+    # Save the recreateCandidates to file ###
     outputCmdLinesFilePath = os.path.join(os.path.dirname(__file__), "lookahead_candidates.txt")
     with open(outputCmdLinesFilePath, 'w') as f:    
         for cmdLine_pass1, cmdLine_pass2, passinfo in lookaheadCmdLines:
@@ -222,6 +260,7 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
             f.write(cmdLine_pass2)
             f.write(passinfo + "\n")
 
+    print(f"Created cmdLines for {5 - maxInsertions} lookahead capture candidates, and inserted them into the schedule file {inputSchedule_filePath}, inserted cmdlines are in file {outputCmdLinesFilePath}")
 
 ### Run script ###
 """"
@@ -231,9 +270,19 @@ startTime = datetime.datetime.now((datetime.timezone.utc))
 endTime = startTime + datetime.timedelta(hours=48)
 hypsoNr = 2
 targetFilePath = os.path.join(os.path.dirname(__file__), "lookahead_targets.json")
+inputSchedule_filePath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28.txt")
 
-getLookaheadCaptureCandidates(startTime, endTime, hypsoNr, targetFilePath)
+getLookaheadCaptureCandidates(startTime, endTime, hypsoNr, targetFilePath, inputSchedule_filePath)
 
 """
+# startTime = datetime.datetime.now((datetime.timezone.utc))
+# endTime = startTime + datetime.timedelta(hours=48)
 
+startTime = datetime.datetime(2026, 6, 2, 8, 0, 0, tzinfo=datetime.timezone.utc)
+endTime = startTime + datetime.timedelta(hours=24)
+hypsoNr = 2
+targetFilePath = os.path.join(os.path.dirname(__file__), "lookahead_targets.json")
+inputSchedule_filePath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28.txt")
+
+getLookaheadCaptureCandidates(startTime, endTime, hypsoNr, targetFilePath, inputSchedule_filePath)
 
