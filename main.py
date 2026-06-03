@@ -3,7 +3,7 @@ import datetime
 import os
 import sys
 
-from get_lookahead_captures import getLookaheadCaptureCandidates
+from src.get_lookahead_captures import getLookaheadCaptureCandidates
 
 
 def parse_datetime(value: str) -> datetime.datetime:

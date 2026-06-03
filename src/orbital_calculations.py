@@ -4,9 +4,9 @@ import datetime
 import os
 import requests
 from requests.exceptions import SSLError, RequestException
-from quaternions import generate_quaternions
+from .quaternions import generate_quaternions
 
-from get_target import GT
+from .get_target import GT
 
 
 ts = skf.load.timescale()

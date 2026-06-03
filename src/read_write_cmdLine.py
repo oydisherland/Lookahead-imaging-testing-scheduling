@@ -1,6 +1,6 @@
 import datetime
-from get_target import GT, getGroundTargetObjectsFromJsonFile, getTargetIdPriorityDictFromJson
-from objects import OT
+from .get_target import GT, getGroundTargetObjectsFromJsonFile
+from .objects import OT
 
 
 def makecmdLineIntoDict(cmdLine: str) -> dict:
@@ -140,7 +140,7 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
                         hasACaptureBeenRemoved = True
                         cmdLines.pop(cmdLines.index(line))
                         continue
-            if lineUnixTime > captureUnixTime:
+            if lineUnixTime >= captureUnixTime:
                 # Current command happends after capture to insert
                 currentIndex = cmdLines.index(line)
                 # Check if current command is too close to the capture time, if so, remove it

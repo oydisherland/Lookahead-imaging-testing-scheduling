@@ -1,8 +1,8 @@
-from orbital_calculations import findIllumminationPeriods, findSatelliteTargetPasses, updateTLE, calculateQuaternions, findSatelliteTargetElevation
-from get_target import getGroundTargetObjectsFromJsonFile, GT
-from objects import OT
-from extract_coud_data import getCloudData
-from read_write_cmdLine import createCaptureCmdLine, insertCmdLineIntoSchedule
+from .orbital_calculations import findIllumminationPeriods, findSatelliteTargetPasses, updateTLE, calculateQuaternions, findSatelliteTargetElevation
+from .get_target import getGroundTargetObjectsFromJsonFile, GT
+from .objects import OT
+from .extract_coud_data import getCloudData
+from .read_write_cmdLine import createCaptureCmdLine, insertCmdLineIntoSchedule
 import json
 from collections import defaultdict
 from bisect import bisect_left
@@ -203,8 +203,8 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
 
     ## Sort out the top 5 pass pairs with the largest difference in cloud level
     lookaheadCmdLines = []
-    outputSchedule_filepath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28_updated.txt")
-    importantGT_ids= [gt.id for gt in getGroundTargetObjectsFromJsonFile(os.path.join(os.path.dirname(__file__), "important_targets.json"))]
+    outputSchedule_filepath = os.path.join(os.path.dirname(__file__), "..", "example_input", "campaign_scripts_h2_2026-05-28_updated.txt")
+    importantGT_ids= [gt.id for gt in getGroundTargetObjectsFromJsonFile(os.path.join(os.path.dirname(__file__), "..","important_targets.json"))]
 
     maxInsertions = 5   # Hardcoded
 
@@ -253,7 +253,7 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
             os.remove(outputSchedule_filepath)
 
     # Save the recreateCandidates to file ###
-    outputCmdLinesFilePath = os.path.join(os.path.dirname(__file__), "lookahead_candidates.txt")
+    outputCmdLinesFilePath = os.path.join(os.path.dirname(__file__), "..","lookahead_candidates.txt")
     with open(outputCmdLinesFilePath, 'w') as f:    
         for cmdLine_pass1, cmdLine_pass2, passinfo in lookaheadCmdLines:
             f.write(cmdLine_pass1)
@@ -268,6 +268,10 @@ Example run:
 
 startTime = datetime.datetime.now((datetime.timezone.utc))
 endTime = startTime + datetime.timedelta(hours=48)
+# or
+startTime = datetime.datetime(2026, 6, 2, 8, 0, 0, tzinfo=datetime.timezone.utc)
+endTime = startTime + datetime.timedelta(hours=24)
+
 hypsoNr = 2
 targetFilePath = os.path.join(os.path.dirname(__file__), "lookahead_targets.json")
 inputSchedule_filePath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28.txt")
@@ -275,14 +279,5 @@ inputSchedule_filePath = os.path.join(os.path.dirname(__file__), "campaign_scrip
 getLookaheadCaptureCandidates(startTime, endTime, hypsoNr, targetFilePath, inputSchedule_filePath)
 
 """
-# startTime = datetime.datetime.now((datetime.timezone.utc))
-# endTime = startTime + datetime.timedelta(hours=48)
 
-startTime = datetime.datetime(2026, 6, 2, 8, 0, 0, tzinfo=datetime.timezone.utc)
-endTime = startTime + datetime.timedelta(hours=24)
-hypsoNr = 2
-targetFilePath = os.path.join(os.path.dirname(__file__), "lookahead_targets.json")
-inputSchedule_filePath = os.path.join(os.path.dirname(__file__), "campaign_scripts_h2_2026-05-28.txt")
-
-getLookaheadCaptureCandidates(startTime, endTime, hypsoNr, targetFilePath, inputSchedule_filePath)
 
