@@ -1,83 +1,87 @@
--u 1780359805  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat -23.4424 -lon  151.9105 --sunZenith  39.7400             -e  30.29 -r  0.98483802519601205  -l  0.17323465291694307  -j  0.00902313487144709  -k -0.00154990124113621 --capture % 2026-06-02 00:23:25.000000+0000 - Predicted Cloud cover:  10.9
--u 1780365427  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat -13.6363 -lon  126.1688 --sunZenith  47.1300             -e  30.04 -r  0.98854851550359857  -l -0.15047445331075182  -j -0.01123433068944394  -k -0.00174963151037788 --capture % 2026-06-02 01:57:07.000000+0000 - Predicted Cloud cover:   2.3
--u 1780376086  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat  40.0900 -lon   94.3300 --sunZenith  69.6200             -e  30.00 -r -0.00180503260383736  -l  0.01055200522398777  -j -0.17468870156470145  -k  0.98456551564062555 --capture % 2026-06-02 04:54:46.000000+0000 - Predicted Cloud cover:   4.7
--u 1780382126  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat  25.1100 -lon   55.1800 --sunZenith  66.5300             -e  11.83 -r  0.89243533623044025  -l -0.44944016691058725  -j -0.03521852990354327  -k -0.01795444697220727 --capture % 2026-06-02 06:35:26.000000+0000 - Predicted Cloud cover:   0.0
--u 1780387282 --spaceweather_end   -a -hypso 2 % Space weather end at 2026-06-02 08:01:22%
--u 1780388750  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n durban               -lat -29.9200 -lon   31.0600 --sunZenith  56.2500             -e  29.26 -r  0.97527117181788991  -l  0.22070303463080895  -j  0.01139595816047217  -k -0.00253851596730858 --capture % 2026-06-02 08:25:50.585502+0000 - Predicted Cloud cover:  18.0
--u 1780389031 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 08:30:31.585502+0000
--u 1780390007 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 08:46:47.585502+0000
--u 1780390983 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 09:03:03.585502+0000
--u 1780392910  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n richard              -lat  70.9150 -lon   24.1694 --sunZenith  49.1700             -e  36.89 -r -0.00247187107847359  -l -0.00682828941038321  -j  0.33129092897591195  -k  0.94350070731048030 --capture % 2026-06-02 09:35:10.356461+0000 - Predicted Cloud cover:   3.2
--u 1780394401  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n gobabeb              -lat -23.6020 -lon   15.1260 --sunZenith  47.9000             -e  15.55 -r  0.88380231083979499  -l  0.46613217235258630  -j  0.03558987543408460  -k -0.01864494619685278 --capture % 2026-06-02 10:00:01.180039+0000 - Predicted Cloud cover:   0.0
--u 1780394682 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 10:04:42.180039+0000
--u 1780395658 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 10:20:58.180039+0000
--u 1780396634 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 10:37:14.180039+0000
--u 1780398681  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n fornes               -lat  68.8627 -lon   15.5559 --sunZenith  46.7000             -e  35.73 -r -0.00036770886302795  -l  0.00308921717388588  -j -0.12637024957738963  -k  0.99197826667180200 --capture % 2026-06-02 11:11:21.502145+0000 - Predicted Cloud cover:  16.7
--u 1780398962 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 11:16:02.502145+0000
--u 1780399938 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 11:32:18.502145+0000
--u 1780400914 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 11:48:34.502145+0000
--u 1780401890 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 12:04:50.502145+0000
--u 1780402866 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 12:21:06.502145+0000
--u 1780404963  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n pontadelgada         -lat  37.7800 -lon  -25.6600 --sunZenith  18.2800             -e  16.22 -r -0.00305659998240910  -l  0.01327993543043073  -j -0.23069511684316713  -k  0.97293065712630755 --capture % 2026-06-02 12:56:03.319048+0000 - Predicted Cloud cover:   2.3
--u 1780405244 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 13:00:44.319048+0000
--u 1780406220 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 13:17:00.319048+0000
--u 1780407196 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 13:33:16.319048+0000
--u 1780408172 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 13:49:32.319048+0000
--u 1780410268 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 14:24:28.000000+0000
--u 1780411244 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 14:40:44.000000+0000
--u 1780412220 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 14:57:00.000000+0000
--u 1780413196 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 15:13:16.000000+0000
--u 1780414172 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 15:29:32.000000+0000
--u 1780416487  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n annapolis            -lat  39.1240 -lon  -76.3490 --sunZenith  20.6000             -e  28.69 -r -0.00005972262602365  -l  0.00231929346309589  -j -0.03074059088104199  -k  0.99952470373839397 --capture % 2026-06-02 16:08:07.495365+0000 - Predicted Cloud cover:   0.0
--u 1780416768 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 16:12:48.495365+0000
--u 1780417744 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 16:29:04.495365+0000
--u 1780418720 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 16:45:20.495365+0000
--u 1780419696 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 17:01:36.495365+0000
--u 1780422410  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n gulfofcalifornia     -lat  31.1912 -lon -114.3448 --sunZenith  25.7600             -e  21.08 -r -0.02096047730331767  -l -0.03742341527972232  -j  0.48385149288727664  -k  0.87409832353733086 --capture % 2026-06-02 17:46:50.462233+0000 - Predicted Cloud cover:   0.0
--u 1780422691 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 17:51:31.462233+0000
--u 1780423667 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 18:07:47.462233+0000
--u 1780424643 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 18:24:03.462233+0000
--u 1780426946  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n griegloppa           -lat  70.2700 -lon   22.3400 --sunZenith  80.6500             -e  73.46 -r  0.00138930275574795  -l -0.00585695676987071  -j -0.23592126724868365  -k  0.97175352922180003 --capture % 2026-06-02 19:02:26.335598+0000 - Predicted Cloud cover:  11.9
--u 1780428108  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n gulfofcalifornia     -lat  31.1912 -lon -114.3448 --sunZenith   9.4300             -e  19.71 -r -0.02364511433682151  -l  0.04193868780337205  -j -0.49448659076697771  -k  0.86785083198956570 --capture % 2026-06-02 19:21:48.069550+0000 - Predicted Cloud cover:   0.0
--u 1780428389 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 19:26:29.069550+0000
--u 1780429365 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 19:42:45.069550+0000
--u 1780430341 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 19:59:01.069550+0000
--u 1780431317 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 20:15:17.069550+0000
--u 1780433095 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 20:44:55.000000+0000
--u 1780434071 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 21:01:11.000000+0000
--u 1780435047 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 21:17:27.000000+0000
--u 1780436023 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 21:33:43.000000+0000
--u 1780436999 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 21:49:59.000000+0000
--u 1780438829 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 22:20:29.000000+0000
--u 1780439805 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 22:36:45.000000+0000
--u 1780440781 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 22:53:01.000000+0000
--u 1780441757 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 23:09:17.000000+0000
--u 1780442733 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 23:25:33.000000+0000
--u 1780444567 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-02 23:56:07.000000+0000
--u 1780446272  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n lucinda              -lat -18.5200 -lon  146.3860 --sunZenith  48.6100             -e  31.39 -r  0.95477453328257822  -l -0.29644955270231627  -j -0.02182504843952343  -k -0.00684985826451683 --capture % 2026-06-03 00:24:32.050207+0000 - Predicted Cloud cover:  25.8
--u 1780446553 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 00:29:13.050207+0000
--u 1780447529 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 00:45:29.050207+0000
--u 1780448505 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 01:01:45.050207+0000
--u 1780449481 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 01:18:01.050207+0000
--u 1780450457 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 01:34:17.050207+0000
--u 1780451433 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 01:50:33.050207+0000
--u 1780452409 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 02:06:49.050207+0000
--u 1780453385 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 02:23:05.050207+0000
--u 1780454361 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 02:39:21.050207+0000
--u 1780455337 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 02:55:37.050207+0000
--u 1780456313 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 03:11:53.050207+0000
--u 1780457289 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 03:28:09.050207+0000
--u 1780458265 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 03:44:25.050207+0000
--u 1780459241 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 04:00:41.050207+0000
--u 1780460217 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 04:16:57.050207+0000
--u 1780462611  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n dunhuang             -lat  40.0900 -lon   94.3300 --sunZenith  20.0700             -e  19.62 -r -0.00253336034848934  -l  0.01242081429792486  -j -0.20590048725591190  -k  0.97849082510021479 --capture % 2026-06-03 04:56:51.588899+0000 - Predicted Cloud cover:   0.8
--u 1780462892 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 05:01:32.588899+0000
--u 1780463868 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 05:17:48.588899+0000
--u 1780464844 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 05:34:04.588899+0000
--u 1780465820 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 05:50:20.588899+0000
--u 1780466796 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 06:06:36.588899+0000
--u 1780468652  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n dubai                -lat  25.1100 -lon   55.1800 --sunZenith  23.0100             -e   8.30 -r  0.89806550603802293  -l -0.43829709648213244  -j -0.03322868550041590  -k -0.01642731079381495 --capture % 2026-06-03 06:37:32.087738+0000 - Predicted Cloud cover:   0.0
--u 1780468933 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 06:42:13.087738+0000
--u 1780469909 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 06:58:29.087738+0000
--u 1780470885 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 07:14:45.087738+0000
--u 1780471861 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 07:31:01.087738+0000
+-u 1780446333  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat -23.4600 -lon  150.9400 --sunZenith  39.4100             -e  30.33 -r  0.99010463326852605  -l  0.14012498427405956  -j  0.00753187320240833  -k -0.00103674898358770 --capture % 2026-06-03 00:25:33.000000+0000 - Predicted Cloud cover:   1.6
+-u 1780451990  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat -15.6773 -lon  124.2246 --sunZenith  44.6300             -e  30.00 -r  0.97472577061917254  -l -0.22282201887185210  -j -0.01570726380272426  -k -0.00364717158409144 --capture % 2026-06-03 01:59:50.000000+0000 - Predicted Cloud cover:   4.7
+-u 1780462611  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat  40.0900 -lon   94.3300 --sunZenith  69.9300             -e  30.18 -r -0.00241020085473678  -l  0.01183099535268947  -j -0.20592130452657392  -k  0.97849406478674072 --capture % 2026-06-03 04:56:51.000000+0000 - Predicted Cloud cover:   0.0
+-u 1780468652  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat  25.1100 -lon   55.1800 --sunZenith  66.9900             -e  11.92 -r  0.89805179553277459  -l -0.43827741187477320  -j -0.03373346946939829  -k -0.01667140720716225 --capture % 2026-06-03 06:37:32.000000+0000 - Predicted Cloud cover:   0.0
+-u 1780473026  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat  66.8800 -lon -162.6200 --sunZenith   5.2000             -e  48.03 -r  0.00110231931853087  -l -0.00596127796918983  -j -0.18695995493926335  -k  0.98234882974745930 --capture % 2026-06-03 07:50:26.000000+0000 - Predicted Cloud cover:   3.9
+-u 1780474627  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n Dummy                -lat  11.1800 -lon   35.1200 --sunZenith  67.7600             -e  30.20 -r  0.99457701389381103  -l -0.10377765724838105  -j -0.00679727476602197  -k -0.00074722544305103 --capture % 2026-06-03 08:17:07.000000+0000 - Predicted Cloud cover:   0.8
+-u 1780479637 --spaceweather_end   -a -hypso 2 % Space weather end at 2026-06-03 09:40:37%
+-u 1780479990  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n sicilychannel        -lat  36.9500 -lon   12.6000 --sunZenith  22.8300             -e  33.16 -r -0.00683138007969810  -l -0.01862833403951244  -j  0.33776845720944143  -k  0.94102007775151797 --capture % 2026-06-03 09:46:30.433119+0000 - Predicted Cloud cover:  12.5
+-u 1780480271 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 09:51:11.433119+0000
+-u 1780481247 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 10:07:27.433119+0000
+-u 1780482223 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 10:23:43.433119+0000
+-u 1780483199 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 10:39:59.433119+0000
+-u 1780485296  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n frohavet             -lat  63.8307 -lon    9.0900 --sunZenith  41.5000             -e  38.45 -r -0.00052365228643728  -l  0.00469526758241089  -j -0.11687253304483786  -k  0.99313568623340476 --capture % 2026-06-03 11:14:56.626466+0000 - Predicted Cloud cover:  24.1
+-u 1780485577 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 11:19:37.626466+0000
+-u 1780486553 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 11:35:53.626466+0000
+-u 1780487529 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 11:52:09.626466+0000
+-u 1780488505 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 12:08:25.626466+0000
+-u 1780489481 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 12:24:41.626466+0000
+-u 1780491097 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 12:51:37.000000+0000
+-u 1780492073 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 13:07:53.000000+0000
+-u 1780493049 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 13:24:09.000000+0000
+-u 1780494025 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 13:40:25.000000+0000
+-u 1780495001 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 13:56:41.000000+0000
+-u 1780496793 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 14:26:33.000000+0000
+-u 1780498557  -s -d 975  -o auto2 -hypso 2 -a -p quaternion     -n puertomontt          -lat -41.9100 -lon  -73.0800 --sunZenith  69.5200             -e  53.30 -r  0.99671950569124634  -l -0.08071483587438023  -j -0.00592483119466910  -k -0.00048848713795243 --capture % 2026-06-03 14:55:57.688796+0000 - Predicted Cloud cover:  14.1
+-u 1780498838 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 15:00:38.688796+0000
+-u 1780499814 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 15:16:54.688796+0000
+-u 1780500790 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 15:33:10.688796+0000
+-u 1780503012  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n annapolis            -lat  39.1240 -lon  -76.3490 --sunZenith  20.2600             -e  28.64 -r -0.00030153171052016  -l  0.00474567651382713  -j -0.06883069979424802  -k  0.99761702190714829 --capture % 2026-06-03 16:10:12.907157+0000 - Predicted Cloud cover:   1.6
+-u 1780503293 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 16:14:53.907157+0000
+-u 1780504269 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 16:31:09.907157+0000
+-u 1780505245 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 16:47:25.907157+0000
+-u 1780506221 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 17:03:41.907157+0000
+-u 1780508936  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n gulfofcalifornia     -lat  31.1912 -lon -114.3448 --sunZenith  25.3100             -e  21.02 -r -0.02028689971924126  -l -0.03690904609792785  -j  0.47690705887864054  -k  0.87794408774571020 --capture % 2026-06-03 17:48:56.736663+0000 - Predicted Cloud cover:   0.0
+-u 1780509217 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 17:53:37.736663+0000
+-u 1780510193 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 18:09:53.736663+0000
+-u 1780511169 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 18:26:09.736663+0000
+-u 1780513471  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n grieghammerfest      -lat  70.5100 -lon   23.5300 --sunZenith  80.7800             -e  73.77 -r  0.00082400914029188  -l -0.00439931988066623  -j -0.18959553863060344  -k  0.98185207578580580 --capture % 2026-06-03 19:04:31.531741+0000 - Predicted Cloud cover:   5.4
+-u 1780514558  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n grizzlybay           -lat  38.0500 -lon -121.8880 --sunZenith  18.2000             -e  24.32 -r -0.00360240105819212  -l  0.01436398132442071  -j -0.24956507416887366  -k  0.96824478955593274 --capture % 2026-06-03 19:22:38.649039+0000 - Predicted Cloud cover:   0.0
+-u 1780514839 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 19:27:19.649039+0000
+-u 1780515815 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 19:43:35.649039+0000
+-u 1780516791 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 19:59:51.649039+0000
+-u 1780517767 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 20:16:07.649039+0000
+-u 1780520625  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n moby                 -lat  20.8188 -lon -157.1836 --sunZenith  19.4000             -e  32.60 -r  0.96738085613220504  -l -0.25275972176957123  -j -0.01635964990398014  -k -0.00437768145373930 --capture % 2026-06-03 21:03:45.889113+0000 - Predicted Cloud cover:  15.6
+-u 1780520906 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 21:08:26.889113+0000
+-u 1780521882 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 21:24:42.889113+0000
+-u 1780522858 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 21:40:58.889113+0000
+-u 1780523834 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 21:57:14.889113+0000
+-u 1780525354 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 22:22:34.000000+0000
+-u 1780526330 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 22:38:50.000000+0000
+-u 1780527306 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 22:55:06.000000+0000
+-u 1780528282 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 23:11:22.000000+0000
+-u 1780529258 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 23:27:38.000000+0000
+-u 1780531092 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-03 23:58:12.000000+0000
+-u 1780532856  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n aquawatchheron       -lat -23.4400 -lon  151.9100 --sunZenith  50.1000             -e  32.02 -r  0.96941187805333995  -l  0.24498270592244184  -j  0.01452566589251276  -k -0.00361794394567048 --capture % 2026-06-04 00:27:36.551480+0000 - Predicted Cloud cover:   1.6
+-u 1780533137 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 00:32:17.551480+0000
+-u 1780534113 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 00:48:33.551480+0000
+-u 1780535089 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 01:04:49.551480+0000
+-u 1780536065 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 01:21:05.551480+0000
+-u 1780537041 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 01:37:21.551480+0000
+-u 1780538017 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 01:53:37.551480+0000
+-u 1780538993 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 02:09:53.551480+0000
+-u 1780539969 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 02:26:09.551480+0000
+-u 1780540945 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 02:42:25.551480+0000
+-u 1780541921 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 02:58:41.551480+0000
+-u 1780542897 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 03:14:57.551480+0000
+-u 1780543873 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 03:31:13.551480+0000
+-u 1780544849 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 03:47:29.551480+0000
+-u 1780545825 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 04:03:45.551480+0000
+-u 1780546801 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 04:20:01.551480+0000
+-u 1780549136  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n dunhuang             -lat  40.0900 -lon   94.3300 --sunZenith  19.7800             -e  19.59 -r -0.00327274040175437  -l  0.01392329298068825  -j -0.23488551264670904  -k  0.97191780878401901 --capture % 2026-06-04 04:58:56.785042+0000 - Predicted Cloud cover:   0.0
+-u 1780549417 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 05:03:37.785042+0000
+-u 1780550393 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 05:19:53.785042+0000
+-u 1780551369 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 05:36:09.785042+0000
+-u 1780552345 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 05:52:25.785042+0000
+-u 1780553321 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 06:08:41.785042+0000
+-u 1780555177  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n dubai                -lat  25.1100 -lon   55.1800 --sunZenith  22.5500             -e   8.28 -r  0.90410661589691033  -l -0.42588987532700739  -j -0.03137842229021668  -k -0.01498118152749066 --capture % 2026-06-04 06:39:37.715261+0000 - Predicted Cloud cover:   0.0
+-u 1780555458 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 06:44:18.715261+0000
+-u 1780556434 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 07:00:34.715261+0000
+-u 1780557410 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 07:16:50.715261+0000
+-u 1780559551  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n kotzbue              -lat  66.8800 -lon -162.6200 --sunZenith  84.8100             -e  61.38 -r  0.00093577674323804  -l -0.00553000410961687  -j -0.17185839588349175  -k  0.98510569744611043 --capture % 2026-06-04 07:52:31.847238+0000 - Predicted Cloud cover:   0.0
+-u 1780560778  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n tharthar             -lat  33.8700 -lon   43.3200 --sunZenith  16.1700             -e  16.08 -r -0.00189155367760294  -l  0.01077434379617673  -j -0.17920213113120420  -k  0.98375145831580924 --capture % 2026-06-04 08:12:58.062072+0000 - Predicted Cloud cover:   0.8
+-u 1780561059 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 08:17:39.062072+0000
+-u 1780562035 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 08:33:55.062072+0000
+-u 1780563011 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 08:50:11.062072+0000
+-u 1780563987 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-06-04 09:06:27.062072+0000
+-u 1780566154  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n voertsjaerv          -lat  58.2700 -lon   26.0500 --sunZenith  36.2600             -e  27.39 -r -0.00000326591634133  -l  0.00069050004244735  -j -0.00813145838581877  -k  0.99996670073735194 --capture % 2026-06-04 09:42:34.990260+0000 - Predicted Cloud cover:   4.0

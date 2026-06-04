@@ -1,8 +1,6 @@
 # Lookahead Imaging Testing Scheduling
 
-Tools to find candidate lookahead captures and optionally insert them into an existing schedule for HYPSO satellites.
-
-Quick start
+Program to find candidates for lookahead captures, and fit them into an already defined schedule. 
 
 - Run the main script from this folder:
 
@@ -11,6 +9,7 @@ python3 main.py -s now -e +48 -h 2 -targets lookahead_targets.json -schedule cam
 ```
 
 Entrypoint is [main.py](main.py). It calls `getLookaheadCaptureCandidates` (see [get_lookahead_captures.py](get_lookahead_captures.py)).
+
 
 ### Command-line flags
 
@@ -27,6 +26,10 @@ Entrypoint is [main.py](main.py). It calls `getLookaheadCaptureCandidates` (see 
 - `-schedule`: path to the schedule.txt file that you want to insert lookahead captures into
   - Example : `campaign_scripts_h2_2026-05-28.txt``
 
+## Important targets
+
+The file `important_targets.json` contains a list of targets that come from the original schedule and must be treated as non-removable. These targets are used by the insertion logic to avoid inserting lookahead capture command lines that would overlap or conflict with high-priority entries from the original schedule.
+
 ## Using `getLookaheadCaptureCandidates(...)` directly
 
 The function is defined in [`get_lookahead_captures.py`](get_lookahead_captures.py):
@@ -37,15 +40,15 @@ getLookaheadCaptureCandidates(planningStartTime, planningEndTime, hypsoNr, looka
 
 ### Parameters
 
-- `planningStartTime`: `datetime.datetime` marking the beginning of the planning horizon.
-- `planningEndTime`: `datetime.datetime` marking the end of the planning horizon.
+- `planningStartTime`: `datetime.datetime` marking the beginning of the planning horizon, should be the same as used when making input schedule (e.g. `campaign_scripts_h2_2026-05-28.txt`).
+- `planningEndTime`: `datetime.datetime` marking the end of the planning horizon, should also be same as input schedule. 
 - `hypsoNr`: integer HYPSO satellite number (typically `1` or `2`).
-- `lookaheadTargets_jsonfilepath`: path to the target JSON file (e.g. `lookahead_targets.json`).
+- `lookaheadTargets_jsonfilepath`: path to the target JSON file (e.g. `lookahead_targets.json`), where all targets used for testing dynamic targeting is defined.
 - `inputSchedule_filePath`: path to the existing schedule file that the function will try to insert lookahead captures into (e.g. `campaign_scripts_h2_2026-05-28.txt`).
 
 ### Behavior and outputs
 
-- The function searches for candidate consecutive-orbit capture pairs, ranks them by cloud-level difference, and generates `lookahead_candidates.txt` in the same folder as the script.
+- The function searches for candidate capture pairs, ranks them by cloud-level difference, and generates `lookahead_candidates.txt` in the same folder as the script.
 - It will attempt to insert up to a small number (currently 5) of selected capture command lines into the provided schedule file. The insertion is performed via a temporary updated file (named like `*_updated.txt`), which is copied back to `inputSchedule_filePath` and then removed.
 - The function performs its work as a side effect (writing files and updating the schedule); you generally do not need to capture a return value.
 
@@ -85,8 +88,4 @@ These are the target definitions the scheduling code uses when searching for val
 ## Output files
 
 - `lookahead_candidates.txt`: generated command lines for candidate lookahead captures.
-
-## Important targets
-
-The file `important_targets.json` contains a list of targets that come from the original schedule and must be treated as non-removable. These targets are used by the insertion logic to avoid inserting lookahead capture command lines that would overlap or conflict with high-priority entries from the original schedule.
 

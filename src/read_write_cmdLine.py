@@ -109,6 +109,8 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
         cmdLines = f.readlines()
     
     # Find the right place to insert the cmdLine based on captureUnixTime
+    skipInsertion = False
+    hasACaptureBeenRemoved = False
     
     for i, line in enumerate(cmdLines.copy()):
 
@@ -118,8 +120,7 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
         # See if the new cmd should be inserted at this index, before current line
         minDurationBetweenTasks = current_cmdDict.get('-d', 975) # about 16 minutes
         timeBufferForLookaheadCapture = 260 # HARDCODED
-        skipInsertion = False
-        hasACaptureBeenRemoved = False
+        
 
         if line.startswith("-u"):
             lineUnixTime = int(line.split(" ")[1])
