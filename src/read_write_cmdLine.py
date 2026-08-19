@@ -96,13 +96,12 @@ def createBufferCmdLine(bufferTime: datetime.datetime) -> str:
     return (
         f"-u {int(bufferTime.timestamp())} -d  975 -o auto2 -hypso 2 -a --buffertimestamp % {bufferTime.strftime('%Y-%m-%d %H:%M:%S.%f%z')}\n"
     )
-
+## TODO: create a function that fixes all buffertimes in the cmdLineFile. Inserting and deleting depending on the capture tasks. 
 def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedule_filePath: str, outputSchedule_filepath: str, importantTargetIds_list: list) -> bool:
     """ Insert a command line into an existing schedule file, at the right place based on the capture time
     Output:
     - None, but the cmdLine is inserted into the file at the right place
     """
-
     
 
     with open(inputSchedule_filePath, 'r') as f:
@@ -111,11 +110,22 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
     # Find the right place to insert the cmdLine based on captureUnixTime
     skipInsertion = False
     hasACaptureBeenRemoved = False
+    spaceWeatherLinePassed = False
     
     for i, line in enumerate(cmdLines.copy()):
 
         # create a dictionary of cmd line
         current_cmdDict = makecmdLineIntoDict(line)
+
+        # See if we have passed the spaceweather end line,
+        if not spaceWeatherLinePassed and '--spaceweather_end' in line:
+            # This line was the spaceweather end line, new cmdLines can be insterted after this one
+            print(line)
+            spaceWeatherLinePassed = True
+            continue
+        elif not spaceWeatherLinePassed:
+            continue
+    
 
         # See if the new cmd should be inserted at this index, before current line
         minDurationBetweenTasks = current_cmdDict.get('-d', 975) # about 16 minutes

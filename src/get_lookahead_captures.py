@@ -72,7 +72,7 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
     """
 
     updateTLE(hypsoNr)
-    # Find a good candidate for t1 and t2, based on orbits starting at end of ground station pass
+    # TODO: Find a good candidate for t1 and t2, based on orbits starting at end of ground station pass
     t1 = planningStartTime
     t2 = planningEndTime
 
@@ -251,6 +251,10 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
             
             for line in cmdLines:
                 cmdDict = makecmdLineIntoDict(line)
+                if "-u" not in cmdDict:
+                    f.write(line)
+                    continue
+
                 if cmdDict["-u"] == int((pass2.startTime + (pass2.endTime - pass2.startTime) / 2).timestamp()):
                     # this is the line we just inserted, so we skip it since we will add the updated version of it with the new cmdLine
                     print(f"Skipping line with time {cmdDict['-u']} since this is the line we just inserted, and we will add the updated version of it with the new cmdLine")
