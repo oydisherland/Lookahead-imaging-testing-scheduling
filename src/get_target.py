@@ -47,7 +47,12 @@ def getGroundTargetObjectsFromJsonFile(targetsJsonFile: str) -> list:
     allGTs = []
     
     with open(targetsJsonFile, 'r') as f:
-        targets_json = json.load(f)
+        targets_text = f.read().strip()
+
+    if not targets_text:
+        return allGTs
+
+    targets_json = json.loads(targets_text)
     
     for index, jsonObj in enumerate(targets_json):
         target = parseTargetJson(jsonObj)

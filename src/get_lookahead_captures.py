@@ -207,7 +207,6 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
     inputOverloded_filepath = os.path.join(inputSchedule_filePath.rsplit(".", 1)[0] + "_overloaded.txt")
     importantGT_ids= [gt.id for gt in getGroundTargetObjectsFromJsonFile(os.path.join(os.path.dirname(__file__), "..","important_targets.json"))]
 
-    maxInsertions = 5   # Hardcoded
 
     for pass1, pass2 in sorted_passPairs:
         cloudsDiff = pass1.cloudLevel - pass2.cloudLevel
@@ -227,24 +226,22 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
         passinfo = f"Passses are {pass2.orbitIndex - pass1.orbitIndex} orbits appart, cloud level pass 1: {pass1.cloudLevel}, Cloud level pass 2: {pass2.cloudLevel}, Difference: {round(cloudsDiff, 2)}, Elevation pass 1: {round(elevationpass1, 2)}, Elevation pass 2: {round(elevationpass2, 2)} \n"
         lookaheadCmdLines.append((cmdLine_pass1, cmdLine_pass2, passinfo))
 
-        if maxInsertions <= 0:
-            break
-        
 
         # try to insert pass 1 into schedule
         middletime = pass1.startTime + (pass1.endTime - pass1.startTime) / 2
         couldInsertImage = insertCmdLineIntoSchedule(int(middletime.timestamp()), cmdLine_pass1, inputSchedule_filePath, outputSchedule_filepath, importantGT_ids)
         if not couldInsertImage:
-            print(f"Could not insert cmdLine for target {pass1.groundTarget.id} into schedule file {inputSchedule_filePath} without overlap with important targets")
+            print(f"Could not insert pass1. cmdLine for target {pass1.groundTarget.id} into schedule at time {middletime}")
             continue
         # try to insert pass 2 into schedule
         middletime = pass2.startTime + (pass2.endTime - pass2.startTime) / 2
         couldInsertImage = insertCmdLineIntoSchedule(int(middletime.timestamp()), cmdLine_pass2, outputSchedule_filepath, inputOverloded_filepath, importantGT_ids)
         if not couldInsertImage:
-            print(f"Could not insert cmdLine for target {pass2.groundTarget.id} into schedule file {inputSchedule_filePath} without overlap with important targets")
+            print(f"Could not insert pass2. cmdLine for target {pass2.groundTarget.id} into schedule at time {middletime}")
             continue    
-        maxInsertions -= 1
+
         # write the updated schedule to file
+        
         with open(inputOverloded_filepath, 'r') as f:
             cmdLines = f.readlines()
         with open(inputSchedule_filePath, 'w') as f:
@@ -258,8 +255,9 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
                 f.write(line)
             #f.writelines(cmdLines)
         # remove the temporary updated schedule file
-        if os.path.exists(outputSchedule_filepath):
-            os.remove(outputSchedule_filepath)
+        
+    if os.path.exists(outputSchedule_filepath):
+        os.remove(outputSchedule_filepath)
 
     # Save the recreateCandidates to file ###
     outputCmdLinesFilePath = os.path.join(os.path.dirname(__file__), "..","lookahead_candidates.txt")
@@ -269,7 +267,7 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
             f.write(cmdLine_pass2)
             f.write(passinfo + "\n")
 
-    print(f"- Created cmdLines for {5 - maxInsertions} lookahead capture candidates\n",
+    print(f"- Created cmdLines for {len(lookaheadCmdLines)} lookahead capture candidates\n",
           "- Inserted first pass into {inputSchedule_filePath}\n",
           "- Inserted pass1 and pass 2 into {inputOverloded_filepath}\n",
           "- Only the inserted cmdlines are in file {outputCmdLinesFilePath}")

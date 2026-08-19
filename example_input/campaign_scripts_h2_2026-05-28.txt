@@ -66,6 +66,7 @@
 -u 1787208539 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-08-20 06:48:59.559853+0000
 -u 1787210864  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n aralsea              -lat  45.0728 -lon   58.4987 --sunZenith  33.8600             -e  26.82 -r -0.00287705602034330  -l  0.01264840867478218  -j -0.22733478116879266  -k  0.97373026941632490 --capture % 2026-08-20 07:27:44.814346+0000 - Predicted Cloud cover:   0.0
 -u 1787211567  -s -d 975  -o auto2 -hypso 2 -a -p wide           -n mogadishu            -lat   2.0000 -lon   45.3100 --sunZenith  22.9800             -e  16.59 -r  0.99612090066324066  -l  0.08780151824764841  -j  0.00581476489306974  -k -0.00048287110134629 --capture % 2026-08-20 07:39:27.202973+0000 - Predicted Cloud cover:  18.0
--u 1787212813  -s -d  975 -o auto2 -hypso 2 -a -p wide          -n TrollStation         -lat -72.0126 -lon    2.5387 --sunZenith  45.0000             -e  50.00 -r  0.94992028431668118  -l -0.23842783039827045  -j  0.19592455655777652  -k  0.04916493946836421                          --capture           % 2026-08-20 08:00:13.880527+00:00 - Predicted Cloud cover:  72.7
+-u 1787211848 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-08-20 07:44:08.202973+0000
+-u 1787212824 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-08-20 08:00:24.202973+0000
 -u 1787213800 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-08-20 08:16:40.202973+0000
 -u 1787214776 -d  975 -o auto2 -hypso 2 -a --buffertimestamp % 2026-08-20 08:32:56.202973+0000
