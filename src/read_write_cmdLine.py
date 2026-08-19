@@ -124,8 +124,18 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
     # Find the right place to insert the cmdLine based on captureUnixTime
     skipInsertion = False
     hasACaptureBeenRemoved = False
+    spaceWeatherLinePassed = False
     
     for i, line in enumerate(cmdLines.copy()):
+
+        # See if we have passed the spaceweather end line,
+        if not spaceWeatherLinePassed and '--spaceweather_end' in line:
+            # This line was the spaceweather end line, new cmdLines can be insterted after this one
+            spaceWeatherLinePassed = True
+            continue
+        elif not spaceWeatherLinePassed:
+            # Have not passed spaceweather end line yet, continue iterating
+            continue
 
         # create a dictionary of cmd line
         current_cmdDict = makecmdLineIntoDict(line)
