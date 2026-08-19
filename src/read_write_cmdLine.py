@@ -1,6 +1,7 @@
 import datetime
 from .get_target import GT, getGroundTargetObjectsFromJsonFile
 from .objects import OT
+from .orbital_calculations import findTargetRiseTime
 
 
 def makecmdLineIntoDict(cmdLine: str) -> dict:
@@ -79,14 +80,26 @@ def createCaptureCmdLine(groundTarget: GT, hypsoNr: int, quaternions: dict, capt
     row['--capture'] = None
     # Comment
     row['%'] = observationMiddleTime
-    # Cloud cover 
+    # Cloud cover
     row['Predicted Cloud cover:'] = predictedCloudCover
+
+    # Lookahead flags consumed by script_generator. Every capture this repo
+    # emits is a lookahead capture, so it carries --lookahead plus the two
+    # timestamps the FC/PC lookahead snippets need:
+    #   target_rise   = the target rising over the satellite's horizon (0-deg
+    #                   elevation, the target clearing the limb) — earlier than
+    #                   captureStart (which is the capture-elevation pass rise);
+    #                   the FC starts pointing 120s before it
+    #   rgb_timestamp = lookahead RGB capture, 180s before mid-capture
+    target_rise = int(findTargetRiseTime(float(groundTarget.lat), float(groundTarget.long),
+                                         observationMiddleTime, hypsoNr).timestamp())
+    rgb_timestamp = row['-u'] - 180
 
     cmd_string = (
         f"-u {row['-u']}  -s -d {row['-d']:4d} -o {row['-o']:5} -hypso {row['-hypso']} -a -p {row['-p']:11}{'':2}"
         f" -n {row['-n']:20} -lat {round(row['-lat'], 4):8.4f} -lon {round(row['-lon'], 4):9.4f} --sunZenith {round((row['--sunZenith']),2):8.4f} {'           '}"
         f" -e {row['-e']:6.2f} -r {row['-r']:20.17f}  -l {row['-l']:20.17f}  -j {row['-j']:20.17f}  -k {row['-k']:20.17f}"
-        f" {'':24} {'--capture':9} {'':9}"
+        f" {'':24} {'--capture':9} --lookahead --target_rise {target_rise} --rgb_timestamp {rgb_timestamp}"
         f" % {str(observationMiddleTime)} - Predicted Cloud cover: {row['Predicted Cloud cover:']:5.1f}\n"
     )
 
@@ -96,12 +109,13 @@ def createBufferCmdLine(bufferTime: datetime.datetime) -> str:
     return (
         f"-u {int(bufferTime.timestamp())} -d  975 -o auto2 -hypso 2 -a --buffertimestamp % {bufferTime.strftime('%Y-%m-%d %H:%M:%S.%f%z')}\n"
     )
-## TODO: create a function that fixes all buffertimes in the cmdLineFile. Inserting and deleting depending on the capture tasks. 
+
 def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedule_filePath: str, outputSchedule_filepath: str, importantTargetIds_list: list) -> bool:
     """ Insert a command line into an existing schedule file, at the right place based on the capture time
     Output:
     - None, but the cmdLine is inserted into the file at the right place
     """
+
     
 
     with open(inputSchedule_filePath, 'r') as f:
@@ -110,22 +124,11 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
     # Find the right place to insert the cmdLine based on captureUnixTime
     skipInsertion = False
     hasACaptureBeenRemoved = False
-    spaceWeatherLinePassed = False
     
     for i, line in enumerate(cmdLines.copy()):
 
         # create a dictionary of cmd line
         current_cmdDict = makecmdLineIntoDict(line)
-
-        # See if we have passed the spaceweather end line,
-        if not spaceWeatherLinePassed and '--spaceweather_end' in line:
-            # This line was the spaceweather end line, new cmdLines can be insterted after this one
-            spaceWeatherLinePassed = True
-            continue
-        elif not spaceWeatherLinePassed:
-            # Have not passed spaceweather end line yet, continue iterating
-            continue
-    
 
         # See if the new cmd should be inserted at this index, before current line
         minDurationBetweenTasks = current_cmdDict.get('-d', 975) # about 16 minutes

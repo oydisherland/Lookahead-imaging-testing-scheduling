@@ -121,6 +121,28 @@ def findSatelliteTargetElevation(targetLat: float, targetLong: float, time: date
 
     return elevation.degrees
 
+
+def findTargetRiseTime(targetLat: float, targetLong: float, observationTime: datetime.datetime, hypsoNr: int) -> datetime.datetime:
+    """ Time the target rises over the satellite's horizon for this pass: the
+    0-deg-elevation crossing of the satellite-target line of sight (the target
+    clearing the limb). This is earlier than the capture-elevation pass rise, and
+    is what the FC uses to start pointing. Returns the last such rise before
+    observationTime (or observationTime itself if none is found in the window).
+    """
+    skfSat = createSatelliteObject(hypsoNr)
+    target_location = skf.wgs84.latlon(targetLat * skf.N, targetLong * skf.E, 100.0)
+
+    # A LEO horizon-to-culmination is < ~6 min; look back 20 min to be safe.
+    t0 = ts.from_datetime(observationTime - datetime.timedelta(minutes=20))
+    t1 = ts.from_datetime(observationTime)
+    timestamps, events = skfSat.find_events(target_location, t0, t1, altitude_degrees=0.0)
+
+    rise = None
+    for ti, event in zip(timestamps, events):
+        if event == 0:  # rise
+            rise = ti.utc_datetime()
+    return rise if rise is not None else observationTime
+
 def findIllumminationPeriods(targetLat: float, targetLong: float, startTime: datetime.datetime, endTime: datetime.datetime) -> list:
     """ Find the periods where the target is illuminated by the sun within the timeinterval of startTime and endTime
     Output:
