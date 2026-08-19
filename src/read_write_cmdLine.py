@@ -120,10 +120,10 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
         # See if we have passed the spaceweather end line,
         if not spaceWeatherLinePassed and '--spaceweather_end' in line:
             # This line was the spaceweather end line, new cmdLines can be insterted after this one
-            print(line)
             spaceWeatherLinePassed = True
             continue
         elif not spaceWeatherLinePassed:
+            # Have not passed spaceweather end line yet, continue iterating
             continue
     
 
