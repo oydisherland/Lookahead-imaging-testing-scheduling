@@ -107,7 +107,7 @@ def createCaptureCmdLine(groundTarget: GT, hypsoNr: int, quaternions: dict, capt
 
 def createBufferCmdLine(bufferTime: datetime.datetime) -> str:
     return (
-        f"-u {int(bufferTime.timestamp())} -d  975 -o auto2 -hypso 2 -a --buffertimestamp % {bufferTime.strftime('%Y-%m-%d %H:%M:%S.%f%z')}\n"
+        f"-u {int(bufferTime.timestamp())} -d  1175 -o auto2 -hypso 2 -a --buffertimestamp % {bufferTime.strftime('%Y-%m-%d %H:%M:%S.%f%z')}\n"
     )
 
 def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedule_filePath: str, outputSchedule_filepath: str, importantTargetIds_list: list) -> bool:
@@ -124,6 +124,7 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
     # Find the right place to insert the cmdLine based on captureUnixTime
     skipInsertion = False
     hasACaptureBeenRemoved = False
+    hasNewCmdLineBeenInserted = False
     spaceWeatherLinePassed = False
     
     for i, line in enumerate(cmdLines.copy()):
@@ -186,49 +187,51 @@ def insertCmdLineIntoSchedule(captureUnixTime: int, newCmdLine: str, inputSchedu
                         cmdLines.pop(currentIndex)
                 print(f" Inserting new cmdLine for target {newCmdLine.split('-n ')[1].split(' ')[0]} at time {captureUnixTime}, and hasbeenremoved = {hasACaptureBeenRemoved}")
                 cmdLines.insert(currentIndex, newCmdLine)
-                
-                if not hasACaptureBeenRemoved:
-                    # Remove another capture that is close in time to newCmdLine, to make sure we are within downlink budget
-                    maxInteration = len(cmdLines)
-                    removeIndex = 0
-                    for _ in range(maxInteration):
-                        if removeIndex + 1 < len(cmdLines):
-                            # try to remove the next capture
-                            removeIndex = removeIndex + 1
-                            nextRemoveIndex = removeIndex + 1
-                        elif removeIndex - 1 >= 0:
-                            # try to remove the previous pass
-                            removeIndex = removeIndex - 1
-                            nextRemoveIndex = removeIndex - 1
-                        else:
-                            # No more captures to remove, cannot insert new cmdLine without colliding with important targets,
-                            print(f" Could not insert new cmdLine for target {newCmdLine.split('-n ')[1].split(' ')[0]} at time {captureUnixTime}, since no ther captures could be removed")
-                            break
-                        removeCandidate_line = cmdLines[removeIndex]
-                        if "--capture" in removeCandidate_line:
-                            # Try to remove this capture cmd
-                            removeCandidate_cmdDict = makecmdLineIntoDict(removeCandidate_line)
-                            if removeCandidate_cmdDict['-n'] in importantTargetIds_list:
-                                # This capture is important, cannot remove, try another one
-                                removeIndex = nextRemoveIndex
-                                continue
-                            elif "--lookahead" in removeCandidate_line:
-                                # This capture is a lookahead capture, cannot remove, try another one
-                                removeIndex = nextRemoveIndex
-                                continue
-                            else:
-                                # This capture is not important, can remove
-                                cmdLines.pop(removeIndex)
-                                hasACaptureBeenRemoved = True
-                                # insert new buffertask instead at same timeslot
-                                middletime = int(removeCandidate_cmdDict['-u'])
-                                print(f" Removing capture for target {removeCandidate_cmdDict['-n']} at time {middletime} to make room for new captures")
-                                newBufferCmd = createBufferCmdLine(datetime.datetime.fromtimestamp(middletime, tz=datetime.timezone.utc))
-                                cmdLines.insert(removeIndex, newBufferCmd)
-                                break
+                hasNewCmdLineBeenInserted = True
+
+                # This logic under here is only nessesary if we have a fully packed schedule from campaign planner, wich atm we dont do
+                # if not hasACaptureBeenRemoved:
+                #     # Remove another capture that is close in time to newCmdLine, to make sure we are within downlink budget
+                #     maxInteration = len(cmdLines)
+                #     removeIndex = 0
+                #     for _ in range(maxInteration):
+                #         if removeIndex + 1 < len(cmdLines):
+                #             # try to remove the next capture
+                #             removeIndex = removeIndex + 1
+                #             nextRemoveIndex = removeIndex + 1
+                #         elif removeIndex - 1 >= 0:
+                #             # try to remove the previous pass
+                #             removeIndex = removeIndex - 1
+                #             nextRemoveIndex = removeIndex - 1
+                #         else:
+                #             # No more captures to remove, cannot insert new cmdLine without colliding with important targets,
+                #             print(f" Could not insert new cmdLine for target {newCmdLine.split('-n ')[1].split(' ')[0]} at time {captureUnixTime}, since no ther captures could be removed")
+                #             break
+                #         removeCandidate_line = cmdLines[removeIndex]
+                #         if "--capture" in removeCandidate_line:
+                #             # Try to remove this capture cmd
+                #             removeCandidate_cmdDict = makecmdLineIntoDict(removeCandidate_line)
+                #             if removeCandidate_cmdDict['-n'] in importantTargetIds_list:
+                #                 # This capture is important, cannot remove, try another one
+                #                 removeIndex = nextRemoveIndex
+                #                 continue
+                #             elif "--lookahead" in removeCandidate_line:
+                #                 # This capture is a lookahead capture, cannot remove, try another one
+                #                 removeIndex = nextRemoveIndex
+                #                 continue
+                #             else:
+                #                 # This capture is not important, can remove
+                #                 cmdLines.pop(removeIndex)
+                #                 hasACaptureBeenRemoved = True
+                #                 # insert new buffertask instead at same timeslot
+                #                 middletime = int(removeCandidate_cmdDict['-u'])
+                #                 print(f" Removing capture for target {removeCandidate_cmdDict['-n']} at time {middletime} to make room for new captures")
+                #                 newBufferCmd = createBufferCmdLine(datetime.datetime.fromtimestamp(middletime, tz=datetime.timezone.utc))
+                #                 cmdLines.insert(removeIndex, newBufferCmd)
+                #                 break
                 break
         # end for loop iterating through cmdlines
-    if skipInsertion or not hasACaptureBeenRemoved:
+    if skipInsertion or not hasNewCmdLineBeenInserted:
         # New cmdLine could not be inserted bue to collinging high priority target or capture was outside of time horizon for the schedule file
         return False
 

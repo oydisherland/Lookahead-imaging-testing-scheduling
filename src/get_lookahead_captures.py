@@ -195,13 +195,14 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
 
     # Combine the two soreted lists
     sorted_passPairs = []
-    for cloudDiffPair, cloudLevelPair in zip(cloudDiffSorted_passPairs, cloudLevelSorted_passPairs):
-        if cloudDiffPair not in sorted_passPairs:
+    added_targets = set()
+    for cloudDiffPair in cloudDiffSorted_passPairs:
+        if cloudDiffPair[0].groundTarget.id not in added_targets:
             sorted_passPairs.append(cloudDiffPair)
-        if cloudLevelPair not in sorted_passPairs:
-            sorted_passPairs.append(cloudLevelPair) 
+            added_targets.add(cloudDiffPair[0].groundTarget.id)
 
-    ## Sort out the top 5 pass pairs with the largest difference in cloud level
+
+    ## Sort out the pass pairs with the largest difference in cloud level
     lookaheadCmdLines = []
     outputSchedule_filepath = os.path.join(os.path.dirname(__file__), "..", "example_input", "campaign_scripts_h2_2026-05-28_updated.txt")
     inputOverloded_filepath = os.path.join(inputSchedule_filePath.rsplit(".", 1)[0] + "_overloaded.txt")
@@ -210,7 +211,7 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
 
     for pass1, pass2 in sorted_passPairs:
         cloudsDiff = pass1.cloudLevel - pass2.cloudLevel
-
+        targetId = pass1.groundTarget.id
         
         # print(f"Target {pass1.groundTarget.id} has cloud level {pass1.cloudLevel} in pass 1 (orbit {pass1.orbitIndex}), and cloud level {pass2.cloudLevel} in pass 2 (orbit {pass2.orbitIndex}), with a difference of {cloudsDiff}")
         # Calculate quaternians and create cmdLine for pass 1 and pass 2
@@ -240,19 +241,24 @@ def getLookaheadCaptureCandidates(planningStartTime: datetime.datetime, planning
             print(f"Could not insert pass2. cmdLine for target {pass2.groundTarget.id} into schedule at time {middletime}")
             continue    
 
-        # write the updated schedule to file
-        
-        with open(inputOverloded_filepath, 'r') as f:
-            cmdLines = f.readlines()
-        with open(inputSchedule_filePath, 'w') as f:
+        # Insert pass 1 into schedule
+        middletime = pass1.startTime + (pass1.endTime - pass1.startTime) / 2
+        couldInsertImage = insertCmdLineIntoSchedule(int(middletime.timestamp()), cmdLine_pass1, inputSchedule_filePath, inputSchedule_filePath, importantGT_ids)
+        if not couldInsertImage:
+            print(f"ERROR, could not insert pass1. cmdLine for target {pass1.groundTarget.id} into schedule at time {middletime}, exit")
+            break
+        # I think this code is not correct see from line 245 instead
+        # with open(inputOverloded_filepath, 'r') as f:
+        #     cmdLines = f.readlines()
+        # with open(inputSchedule_filePath, 'w') as f:
             
-            for line in cmdLines:
-                cmdDict = makecmdLineIntoDict(line)
-                if cmdDict["-u"] == int((pass2.startTime + (pass2.endTime - pass2.startTime) / 2).timestamp()):
-                    # this is the line we just inserted, so we skip it since we will add the updated version of it with the new cmdLine
-                    print(f"Skipping line with time {cmdDict['-u']} since this is the line we just inserted, and we will add the updated version of it with the new cmdLine")
-                    continue
-                f.write(line)
+        #     for line in cmdLines:
+        #         cmdDict = makecmdLineIntoDict(line)
+        #         if cmdDict["-u"] == int((pass2.startTime + (pass2.endTime - pass2.startTime) / 2).timestamp()):
+        #             # this is the line we just inserted, so we skip it since we will add the updated version of it with the new cmdLine
+        #             print(f"Skipping line with time {cmdDict['-u']} since this is the line we just inserted, and we will add the updated version of it with the new cmdLine")
+        #             continue
+        #         f.write(line)
             #f.writelines(cmdLines)
         # remove the temporary updated schedule file
         
